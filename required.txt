@@ -1,0 +1,49 @@
+Rappel : Les routes se charge mtn dans app.php
+
+php artisan route:list - Liste
+php artisan db:seed  - Migrer un seed dans ma base de données
+
+php artisan migrate:fresh
+
+
+
+
+
+
+
+📌 Description
+
+Le module "Exam Results" permet de gérer les résultats des étudiants ayant passé un examen dans un centre de langue.
+
+Chaque résultat est lié à :
+
+une session d'examen (A1, A2, B1, etc.)
+un centre
+un candidat identifié par un numéro de table
+
+🧠 Architecture technique
+
+Le module est construit selon une architecture Laravel professionnelle :
+
+FormRequest : validation des données entrantes
+Policy : gestion des permissions par rôle et par centre
+Service (ResultService) : calcul des notes et du statut
+Controller : gestion des requêtes HTTP
+Resource : transformation des données pour l'API 
+
+Chaque examen contient 4 modules :
+-Lesen
+-Hören
+-Schreiben
+-Sprechen
+Chaque module possède une note maximale définie par la session d'examen
+Un candidat est considéré comme réussi (Bestanden) si :
+il obtient au moins la moyenne dans chaque module
+ET atteint le score global minimal défini par la session
+
+
+Structure du fichier exxcel 
+
+| table_number | full_name | lesen | hoeren | schreiben | sprechen |
+| ------------ | --------- | ----- | ------ | --------- | -------- |
+| A1           | Jean D.   | 15    | 12     | 18        | 14       |
