@@ -5,7 +5,7 @@ php artisan db:seed  - Migrer un seed dans ma base de données
 
 php artisan migrate:fresh
 
-
+composer require barryvdh/laravel-dompdf : PDF
 
 
 
@@ -47,3 +47,12 @@ Structure du fichier exxcel
 | table_number | full_name | lesen | hoeren | schreiben | sprechen |
 | ------------ | --------- | ----- | ------ | --------- | -------- |
 | A1           | Jean D.   | 15    | 12     | 18        | 14       |
+
+
+Structure du fichier PDF
+Session: A2 Juin 2026
+Centre: KURSRAUM
+
+Table | Nom | Lesen | Hören | Schreiben | Sprechen | Total | Statut
+
+

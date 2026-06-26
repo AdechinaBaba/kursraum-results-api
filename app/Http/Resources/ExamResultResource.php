@@ -12,7 +12,7 @@ class ExamResultResource extends JsonResource
     public function toArray(Request $request): array
     {
         $service = app(ResultService::class);
-        $computed = $service->compute($this);
+        $computed = $service->compute($this->resource);
 
         return [
             'id' => $this->id,
@@ -51,6 +51,10 @@ class ExamResultResource extends JsonResource
             'status_label' => $computed['overall_passed']
                 ? 'Bestanden'
                 : 'Nicht Bestanden',
+
+            'mention' => $computed['mention'],
+
+            'percentage' => $computed['percentage'],
         ];
     }
 }

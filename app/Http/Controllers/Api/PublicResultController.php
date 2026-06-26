@@ -61,4 +61,40 @@ class PublicResultController extends Controller
         // 5. Retour propre via Resource
         return new ExamResultResource($result);
     }
+
+    public function centers()
+    {
+        $centers = Center::query()
+            ->where('status', true)
+            ->select('id', 'name', 'slug')
+            ->orderBy('name')
+            ->get();
+
+        return response()->json($centers);
+    }
+
+    public function sessions(string $slug)
+    {
+        $center = Center::where('slug', $slug)->first();
+
+        if (!$center) {
+            return response()->json([
+                'message' => 'Centre introuvable'
+            ], 404);
+        }
+
+        $sessions = ExamSession::query()
+            ->where('center_id', $center->id)
+            ->where('published', true)
+            ->select(
+                'id',
+                'title',
+                'level',
+                'exam_date'
+            )
+            ->orderByDesc('exam_date')
+            ->get();
+
+        return response()->json($sessions);
+    }
 }

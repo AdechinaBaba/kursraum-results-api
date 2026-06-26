@@ -6,6 +6,9 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\ExamResultController;
 use App\Http\Controllers\Api\ExamSessionController;
 use App\Http\Controllers\Api\ExamResultImportController;
+use App\Http\Controllers\Api\PublicResultController;
+use App\Http\Controllers\Api\StatisticsController;
+use App\Http\Controllers\Api\ExamSessionPdfController;
 
 
 Route::post('/login', [AuthController::class, 'login']);
@@ -82,6 +85,29 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 
 
-use App\Http\Controllers\Api\PublicResultController;
+Route::prefix('public')->group(function () {
 
-Route::get('/public/results/search', [PublicResultController::class, 'search']);
+    Route::get('/centers', [PublicResultController::class, 'centers']);
+
+    Route::get('/centers/{slug}/sessions',[PublicResultController::class, 'sessions']);
+
+    Route::get('/results/search', [PublicResultController::class, 'search']);
+
+});
+
+
+
+Route::middleware(['auth:sanctum'])->group(function () {
+
+    Route::get('/statistics/sessions/{session}',[StatisticsController::class, 'sessionStats']);
+
+    Route::get('/statistics/centers/{center}',[StatisticsController::class, 'centerStats']);
+
+    Route::get('/statistics/global',[StatisticsController::class, 'globalStats']);
+});
+
+
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/exam-sessions/{session}/export-pdf', [ExamSessionPdfController::class, 'export']);
+});

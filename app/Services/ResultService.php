@@ -101,6 +101,38 @@ class ResultService
             'module_passing_score' => $this->modulePassingScore($session),
 
             'overall_passing_score' => $this->overallPassingScore($session),
+
+            'percentage' => $this->percentage($result),
+
+            'mention' => $this->mention($result),
         ];
+    }
+
+    public function percentage(ExamResult $result): float
+    {
+        $session = $result->examSession;
+
+        $maxTotal = $session->module_max_score * count($this->modules);
+
+        return round(
+            ($this->total($result) / $maxTotal) * 100,
+            2
+        );
+    }
+
+    public function mention(ExamResult $result): string
+    {
+        if (!$this->isPassed($result)) {
+            return 'Nicht Bestanden';
+        }
+    
+        $percentage = $this->percentage($result);
+    
+        return match (true) {
+            $percentage >= 85 => 'Sehr Gut',
+            $percentage >= 70 => 'Gut',
+            $percentage >= 60 => 'Befriedigend',
+            default => 'Ausreichend',
+        };
     }
 }
