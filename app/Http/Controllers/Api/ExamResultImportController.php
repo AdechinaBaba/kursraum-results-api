@@ -13,7 +13,7 @@ class ExamResultImportController extends Controller
 {
     public function import(Request $request, ExamSession $session)
     {
-        $this->authorize('create', ExamResult::class);
+        $this->authorize('import', $session);
 
         $request->validate([
             'file' => 'required|file|mimes:xlsx,xls,csv',

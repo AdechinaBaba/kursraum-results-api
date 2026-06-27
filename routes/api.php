@@ -85,7 +85,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 
 
-Route::prefix('public')->group(function () {
+Route::prefix('public')->middleware('throttle:public-results')->group(function () {
 
     Route::get('/centers', [PublicResultController::class, 'centers']);
 

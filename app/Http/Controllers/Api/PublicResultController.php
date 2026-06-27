@@ -16,7 +16,7 @@ class PublicResultController extends Controller
         $request->validate([
             'center_slug' => 'required|string',
             'session_id' => 'required|integer',
-            'table_number' => 'required|string|max:50',
+            'table_number' => ['required','string','min:2','max:20','regex:/^[A-Za-z0-9\-]+$/'],  
         ]);
 
         // 1. Vérifier centre
@@ -42,8 +42,8 @@ class PublicResultController extends Controller
         // 3. IMPORTANT : vérifier publication
         if (!$session->published) {
             return response()->json([
-                'message' => 'Résultats pas encore publiés'
-            ], 403);
+                'message' => 'Aucun résultat ne correspond aux informations fournies.'
+            ], 404);
         }
 
         // 4. Chercher résultat
@@ -54,7 +54,7 @@ class PublicResultController extends Controller
 
         if (!$result) {
             return response()->json([
-                'message' => 'Aucun résultat trouvé'
+                'message' => 'Aucun résultat ne correspond aux informations fournies.'
             ], 404);
         }
 
@@ -79,7 +79,7 @@ class PublicResultController extends Controller
 
         if (!$center) {
             return response()->json([
-                'message' => 'Centre introuvable'
+                'message' => 'Aucun résultat ne correspond aux informations fournies.'
             ], 404);
         }
 

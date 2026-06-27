@@ -5,7 +5,7 @@ php artisan db:seed  - Migrer un seed dans ma base de données
 
 php artisan migrate:fresh
 
-composer require barryvdh/laravel-dompdf : PDF
+composer require barryvdh/laravel-dompdf : Cmd PDF
 
 
 
